@@ -22,12 +22,12 @@ class LoginController extends GetxController {
   }
 
   void saveDataToDB() {
-  DBProvider? dbProvider = DBProvider.instance;
+  // DBProvider? dbProvider = DBProvider.instance;
   UserModel user = UserModel.fromMap({
     "name" : name.text,
     "email" : email.text
   });
-  dbProvider?.insertUser(user: user);
+  // dbProvider?.insertUser(user: user);
   }
 
   void performLogin() {

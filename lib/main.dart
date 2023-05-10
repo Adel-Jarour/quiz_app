@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/constance/color_const.dart';
-import 'package:quiz_app/db_controller/db_provider.dart';
 import 'package:quiz_app/routing/pages.dart';
 import 'package:quiz_app/routing/routes.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DBProvider.instance?.initDB();
   runApp(const MyApp());
 }
 
@@ -39,4 +37,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
