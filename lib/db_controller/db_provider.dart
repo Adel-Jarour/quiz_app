@@ -1,99 +1,82 @@
-import 'dart:io';
-
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:quiz_app/models/question_model.dart';
-import 'package:quiz_app/models/user_model.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite/sqflite.dart';
 
-class DBProvider {
-  DBProvider._();
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  static Database? _database;
 
-  static DBProvider? _instance;
-
-  static DBProvider? get instance {
-    if (_instance == null) {
-      _instance = DBProvider._();
-      return _instance;
-    }
+  factory DatabaseHelper() {
     return _instance;
   }
 
-  Future<Database> _openDatabase() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'quiz_app.db');
-    final db = sqlite3.open(path);
-    return db;
+  DatabaseHelper._internal();
+
+  Future<Database?> get database async {
+    if (_database != null) {
+      return _database;
+    }
+
+    _database = await _initDatabase();
+    return _database;
   }
 
-  Future initDB() async {
-    final db = await _openDatabase();
+  Future<Database> _initDatabase() async {
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'my_database.db');
 
-    db.execute('''
-      CREATE TABLE IF NOT EXISTS add_question (
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE questions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        question TEXT NOT NULL,
-        answer1 TEXT NOT NULL,
-        answer2 TEXT NOT NULL,
-        answer3 TEXT NOT NULL,
-        answer4 TEXT NOT NULL,
-        correctAnswer INTEGER NOT NULL
+        q1 TEXT,
+        q2 TEXT,
+        q3 TEXT,
+        q4 TEXT,
+        answer TEXT
       )
     ''');
 
-    db.execute('''
-      CREATE TABLE IF NOT EXISTS add_user (
+    await db.execute('''
+      CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL,
+        username TEXT,
+        password TEXT
       )
     ''');
 
-    db.dispose();
+    // Insert a default user for testing purposes
+    await db.insert('users', {'username': 'admin', 'password': 'password'});
   }
 
-  Future<void> insertQuestion({
-    required QuestionModel question,
-  }) async {
-    final db = await _openDatabase();
-
-    db.execute('''
-      INSERT INTO add_question (
-        question, answer1, answer2, answer3, answer4, correctAnswer
-      ) VALUES (?, ?, ?, ?, ?, ?)
-    ''', [
-      question.question,
-      question.answer1,
-      question.answer2,
-      question.answer3,
-      question.answer4,
-      question.correctAnswer
-    ]);
-
-    db.dispose();
+  Future<int?> addUser(String username, String password) async {
+    final db = await database;
+    final res =
+        await db?.insert('users', {'username': username, 'password': password});
+    print("ADD USER SUCESS");
+    return res;
   }
 
-  // Future<List<QuestionModel>> getQuestions() async {
-  //   final db = await _openDatabase();
-  //   final results = await db.query('add_question');
-  //
-  //   return results.map((map) => QuestionModel.fromMap(map)).toList();
-  // }
+  Future<List<Map<String, dynamic>>?> getQuestions() async {
+    final db = await database;
+    final res = await db?.query('questions');
+    return res;
+  }
 
-  Future<void> insertUser({
-    required UserModel user,
-  }) async {
-    final db = await _openDatabase();
+  Future<int?> addQuestion(
+      String q1, String q2, String q3, String q4, String answer) async {
+    final db = await database;
+    final res = await db?.insert('questions',
+        {'q1': q1, 'q2': q2, 'q3': q3, 'q4': q4, 'answer': answer});
+    return res;
+  }
 
-    db.execute('''
-      INSERT INTO add_user (
-        name, email
-      ) VALUES (?, ?)
-    ''', [
-      user.name,
-      user.email,
-    ]);
-
-    db.dispose();
+  Future<Map<String, dynamic>?> getUser(String username) async {
+    final db = await database;
+    final res = await db?.query('users',
+        where: 'username = ?', whereArgs: [username], limit: 1);
+    return res!.isNotEmpty ? res.first : null;
   }
 }
