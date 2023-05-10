@@ -5,7 +5,6 @@ import 'package:quiz_app/constance/color_const.dart';
 import 'package:quiz_app/routing/pages.dart';
 import 'package:quiz_app/routing/routes.dart';
 
-import 'db_controller/db_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -52,7 +52,6 @@ class DatabaseHelper {
     final db = await database;
     final res =
         await db?.insert('users', {'username': username, 'email': password});
-    print("ADD USER SUCCESS");
     return res;
   }
 
