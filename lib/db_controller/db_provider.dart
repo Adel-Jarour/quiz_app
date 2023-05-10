@@ -43,19 +43,16 @@ class DatabaseHelper {
       CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
-        password TEXT
+        email TEXT
       )
     ''');
-
-    // Insert a default user for testing purposes
-    await db.insert('users', {'username': 'admin', 'password': 'password'});
   }
 
   Future<int?> addUser(String username, String password) async {
     final db = await database;
     final res =
-        await db?.insert('users', {'username': username, 'password': password});
-    print("ADD USER SUCESS");
+        await db?.insert('users', {'username': username, 'email': password});
+    print("ADD USER SUCCESS");
     return res;
   }
 

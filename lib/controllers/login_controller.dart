@@ -1,12 +1,14 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:quiz_app/db_controller/db_provider.dart';
 import 'package:quiz_app/models/user_model.dart';
 import 'package:quiz_app/routing/routes.dart';
 
+import '../db_controller/db_provider.dart';
+
 class LoginController extends GetxController {
-  late TextEditingController name;
-  late TextEditingController email;
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   GlobalKey<FormState> formKey;
 
@@ -21,19 +23,21 @@ class LoginController extends GetxController {
     return false;
   }
 
-  void saveDataToDB() {
-  // DBProvider? dbProvider = DBProvider.instance;
-  UserModel user = UserModel.fromMap({
-    "name" : name.text,
-    "email" : email.text
-  });
-  // dbProvider?.insertUser(user: user);
+  saveDataToDB() async {
+    print(name.text);
+    print(email.text);
+    await DatabaseHelper().addUser(name.text, email.text);
+    // DBProvider? dbProvider = DBProvider.instance;
+    // UserModel user =
+    //     UserModel.fromMap({"name": name.text, "email": email.text});
+    // dbProvider?.insertUser(user: user);
   }
 
-  void performLogin() {
+  void performLogin() async {
     if (checkData()) {
       isLogin = true;
       update();
+      await saveDataToDB();
       // save data in sql db
       isLogin = false;
       name.clear();

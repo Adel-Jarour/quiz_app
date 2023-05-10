@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../constance/color_const.dart';
 import 'custem_text.dart';
 
@@ -49,11 +50,8 @@ class CustomButton extends StatelessWidget {
         onTap!();
       },
       overlayColor: MaterialStateProperty.all(Colors.transparent),
-      child: AnimatedContainer(
-        duration: const Duration(
-          seconds: 1,
-        ),
-        width: enabled ? 50.w : width,
+      child: Container(
+        width: width,
         height: 56.h,
         decoration: BoxDecoration(
           color: colorButton ?? ColorConst.primaryColor,
