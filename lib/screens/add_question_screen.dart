@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/add_question_controller.dart';
+import 'package:quiz_app/routing/routes.dart';
 import 'package:quiz_app/widgets/add_answer_widget.dart';
 import 'package:quiz_app/widgets/custom_button.dart';
 import 'package:quiz_app/widgets/custom_text_form_field.dart';
@@ -30,7 +31,8 @@ class AddQuestionScreen extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.back();
+            // Get.back();
+            Get.toNamed(Routes.createQuiz);
           },
           icon: const Icon(
             Icons.arrow_back_ios,

@@ -1,16 +1,18 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:quiz_app/widgets/custem_text.dart';
 
-class AddQuestionController extends GetxController{
+import '../db_controller/db_helper.dart';
 
+class AddQuestionController extends GetxController {
   late TextEditingController question;
   late TextEditingController answer1;
   late TextEditingController answer2;
   late TextEditingController answer3;
   late TextEditingController answer4;
   late TextEditingController correctAnswer;
-
 
   String dropdownValue = 'A';
 
@@ -32,13 +34,40 @@ class AddQuestionController extends GetxController{
     return false;
   }
 
-  void performSubmit() {
+  saveDataToDB() async {
+    await DatabaseHelper().addQuestion(
+      question.text,
+      answer1.text,
+      answer2.text,
+      answer3.text,
+      answer4.text,
+      dropdownValue,
+    );
+  }
+
+  void performSubmit() async {
     if (checkData()) {
       isSubmit = true;
       update();
-
-      // save data in sql db
-
+      await saveDataToDB();
+      Get.snackbar(
+        "",
+        "",
+        icon: const Icon(Icons.verified, color: Colors.green),
+        snackPosition: SnackPosition.TOP,
+        titleText: CustomText(
+          txt: "Add Question",
+          fontSize: 18.sp,
+        ),
+        messageText: CustomText(
+          txt: "question added successfully",
+          color: Colors.black,
+          fontSize: 15.sp,
+        ),
+        padding: EdgeInsets.all(20.0.r),
+        borderRadius: 27.0,
+        backgroundColor: Colors.white60,
+      );
       isSubmit = false;
       question.clear();
       answer1.clear();
@@ -73,5 +102,4 @@ class AddQuestionController extends GetxController{
     answer4.dispose();
     correctAnswer.dispose();
   }
-
 }

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:quiz_app/models/user_model.dart';
 import 'package:quiz_app/routing/routes.dart';
 
-import '../db_controller/db_provider.dart';
+import '../db_controller/db_helper.dart';
 
 class LoginController extends GetxController {
   TextEditingController name = TextEditingController();
@@ -24,13 +24,7 @@ class LoginController extends GetxController {
   }
 
   saveDataToDB() async {
-    print(name.text);
-    print(email.text);
     await DatabaseHelper().addUser(name.text, email.text);
-    // DBProvider? dbProvider = DBProvider.instance;
-    // UserModel user =
-    //     UserModel.fromMap({"name": name.text, "email": email.text});
-    // dbProvider?.insertUser(user: user);
   }
 
   void performLogin() async {
@@ -38,7 +32,6 @@ class LoginController extends GetxController {
       isLogin = true;
       update();
       await saveDataToDB();
-      // save data in sql db
       isLogin = false;
       name.clear();
       email.clear();

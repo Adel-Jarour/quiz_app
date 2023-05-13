@@ -24,18 +24,20 @@ class DatabaseHelper {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'my_database.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(path,
+        version: 2, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE questions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        q1 TEXT,
-        q2 TEXT,
-        q3 TEXT,
-        q4 TEXT,
-        answer TEXT
+        question TEXT,
+        answer1 TEXT,
+        answer2 TEXT,
+        answer3 TEXT,
+        answer4 TEXT,
+        correctAnswer TEXT
       )
     ''');
 
@@ -47,6 +49,8 @@ class DatabaseHelper {
       )
     ''');
   }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
   Future<int?> addUser(String username, String password) async {
     final db = await database;
@@ -61,18 +65,29 @@ class DatabaseHelper {
     return res;
   }
 
-  Future<int?> addQuestion(
-      String q1, String q2, String q3, String q4, String answer) async {
+  Future<int?> addQuestion(String question, String answer1, String answer2,
+      String answer3, String answer4, String correctAnswer) async {
     final db = await database;
-    final res = await db?.insert('questions',
-        {'q1': q1, 'q2': q2, 'q3': q3, 'q4': q4, 'answer': answer});
+    final res = await db?.insert('questions', {
+      'question': question,
+      'answer1': answer1,
+      'answer2': answer2,
+      'answer3': answer3,
+      'answer4': answer4,
+      'correctAnswer': correctAnswer
+    });
     return res;
   }
 
-  Future<Map<String, dynamic>?> getUser(String username) async {
+  Future<int?> deleteQuestion(int id) async {
     final db = await database;
-    final res = await db?.query('users',
-        where: 'username = ?', whereArgs: [username], limit: 1);
+    final res = await db?.delete('questions', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<Map<String, dynamic>?> getUser() async {
+    final db = await database;
+    final res = await db?.query('users', orderBy: 'id DESC', limit: 1);
     return res!.isNotEmpty ? res.first : null;
   }
 }

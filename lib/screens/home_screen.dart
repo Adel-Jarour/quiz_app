@@ -2,13 +2,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constance/color_const.dart';
+import 'package:quiz_app/controllers/home_controller.dart';
 import 'package:quiz_app/routing/routes.dart';
 import 'package:quiz_app/widgets/custom_button.dart';
 
 import '../widgets/custem_text.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  HomeController controller = Get.put(HomeController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      drawer: const DrawerWidget(),
+      drawer: DrawerWidget(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -54,9 +57,11 @@ class HomeScreen extends StatelessWidget {
 }
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
+  DrawerWidget({
     super.key,
   });
+
+  HomeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +83,15 @@ class DrawerWidget extends StatelessWidget {
                   height: 15.h,
                   width: double.infinity,
                 ),
-                const CustomText(
-                  txt: "Adel & Salem",
+                CustomText(
+                  txt: controller.username,
                   color: Colors.white,
                 ),
                 SizedBox(
                   height: 5.h,
                 ),
-                const CustomText(
-                  txt: "user.email@example.com",
+                CustomText(
+                  txt: controller.email,
                   color: Colors.white,
                 ),
               ],

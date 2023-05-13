@@ -5,7 +5,7 @@ class QuestionModel {
   String? answer2;
   String? answer3;
   String? answer4;
-  int? correctAnswer;
+  String? correctAnswer;
 
   QuestionModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
