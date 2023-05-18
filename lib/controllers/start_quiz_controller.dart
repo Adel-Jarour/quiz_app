@@ -5,8 +5,14 @@ import '../db_controller/db_helper.dart';
 import '../models/question_model.dart';
 
 class StartQuizController extends GetxController {
-  List<QuestionModel> questions = [];
 
+
+  List<QuestionModel> questions = [];
+  List<String?> selectedAnswer = [];
+  List<String?> correctAnswer = [];
+
+
+  // get all question from db
   Future getAllQuestions() async {
     questions = [];
     final res = await DatabaseHelper().getQuestions();
@@ -17,6 +23,7 @@ class StartQuizController extends GetxController {
     update();
   }
 
+  // for page view builder widget
   PageController pageController = PageController(initialPage: 0);
   int currentPage = 0;
 
@@ -25,14 +32,19 @@ class StartQuizController extends GetxController {
     update();
   }
 
+
+  /*
+  save selected option,
+  and if is the last element (question) in the list shows the result.
+   */
   bool showResult = false;
 
   nextPage(String index) {
     if (lastQuestion()) {
       selectedAnswer.add(index);
       showResult = true;
-      calculateResult();
-      ratioResult();
+      calculateCorrectAnswer();
+      calculateSuccessRate();
     } else {
       selectedAnswer.add(index);
       pageController.nextPage(
@@ -44,16 +56,16 @@ class StartQuizController extends GetxController {
     update();
   }
 
+  // check if is the last element (question) in the list
   bool lastQuestion() {
     return currentPage + 1 == questions.length;
   }
 
-  List<String?> selectedAnswer = [];
-  List<String?> correctAnswer = [];
 
+  // check the correct answer from what the user selected.
   int equalCount = 0;
 
-  void calculateResult() {
+  void calculateCorrectAnswer() {
     for (int i = 0; i < selectedAnswer.length; i++) {
       if (selectedAnswer[i] == correctAnswer[i]) {
         equalCount++;
@@ -62,9 +74,11 @@ class StartQuizController extends GetxController {
     print("equalCount is: $equalCount");
   }
 
+
+  // calculate the success rate from result
   int index = 0;
 
-  void ratioResult() {
+  void calculateSuccessRate() {
     double ratio = (equalCount / correctAnswer.length) * 100;
     if(ratio < 50.0){
       index = 0;
