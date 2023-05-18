@@ -5,21 +5,22 @@ import '../db_controller/db_helper.dart';
 import '../models/question_model.dart';
 
 class StartQuizController extends GetxController {
-
-
   List<QuestionModel> questions = [];
   List<String?> selectedAnswer = [];
   List<String?> correctAnswer = [];
-
+  bool loading = false;
 
   // get all question from db
   Future getAllQuestions() async {
     questions = [];
+    loading = true;
+    update();
     final res = await DatabaseHelper().getQuestions();
-    for (var i in res!) {
+    for (var i in res ?? []) {
       questions.add(QuestionModel.fromMap(i));
       correctAnswer.add(i['correctAnswer']);
     }
+    loading = false;
     update();
   }
 
@@ -31,7 +32,6 @@ class StartQuizController extends GetxController {
     currentPage = page;
     update();
   }
-
 
   /*
   save selected option,
@@ -61,7 +61,6 @@ class StartQuizController extends GetxController {
     return currentPage + 1 == questions.length;
   }
 
-
   // check the correct answer from what the user selected.
   int equalCount = 0;
 
@@ -74,24 +73,27 @@ class StartQuizController extends GetxController {
     print("equalCount is: $equalCount");
   }
 
-
   // calculate the success rate from result
   int index = 0;
 
   void calculateSuccessRate() {
     double ratio = (equalCount / correctAnswer.length) * 100;
-    if(ratio < 50.0){
+    if (ratio < 50.0) {
       index = 0;
-    }else if(ratio >= 50.0 && ratio < 80.0) {
+    } else if (ratio >= 50.0 && ratio < 80.0) {
       index = 1;
-    }
-    else{
+    } else {
       index = 2;
     }
     print("ratio result is: $ratio %");
     update();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    getAllQuestions();
+  }
 
   @override
   void dispose() {

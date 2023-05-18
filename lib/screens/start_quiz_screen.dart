@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,13 +14,11 @@ import '../widgets/custem_text.dart';
 class StartQuizScreen extends StatelessWidget {
   StartQuizScreen({Key? key}) : super(key: key);
 
-  StartQuizController controller = Get.put(StartQuizController());
-
   @override
   Widget build(BuildContext context) {
-    controller.getAllQuestions();
     return GetBuilder<StartQuizController>(
-      builder: (_) => Scaffold(
+      init: StartQuizController(),
+      builder: (controller) => Scaffold(
         appBar: AppBar(
           title: CustomText(
             txt: "Quiz App",
@@ -37,9 +36,11 @@ class StartQuizScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: (controller.questions.length > 4)
-            ? const QuizWidget()
-            : const NoEnoughQuestions(),
+        body: controller.loading
+            ? const Center(child: CupertinoActivityIndicator())
+            : (controller.questions.length > 4)
+                ? const QuizWidget()
+                : const NoEnoughQuestions(),
       ),
     );
   }
