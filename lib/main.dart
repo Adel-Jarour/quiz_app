@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Quiz app',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
-        initialRoute: Routes.login,
+        initialRoute: Routes.home,
         getPages: AppPages.pages,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

@@ -4,14 +4,14 @@ import 'package:quiz_app/db_controller/db_helper.dart';
 class HomeController extends GetxController {
 
 
-  String username = "";
-  String email = "";
+  String username = "Adel & Salem";
+  String email = "example@email.com";
 
   Future getUser() async{
     final res = await DatabaseHelper().getUser();
     if (res!.isNotEmpty){
-      username = res['username'];
-      email = res['email'];
+      username = res['username'] ?? "";
+      email = res['email'] ?? "";
     }
   }
 
@@ -19,7 +19,6 @@ class HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getUser();
-
+    // getUser();
   }
 }
