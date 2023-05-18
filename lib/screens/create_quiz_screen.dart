@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 class CreateQuizScreen extends StatelessWidget {
   CreateQuizScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,29 +51,30 @@ class CreateQuizScreen extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
-              controller.loading ?
-              const Center(child: CupertinoActivityIndicator())
-                  :
-              controller.questions.isNotEmpty
-                  ? Expanded(
-                      child: _QuestionWidget(),
-                    )
-                  : Column(
-                      children: [
-                        SizedBox(height: 50.h,),
-                        Image.asset(
-                          "assets/images/faq.png",
-                          scale: 10,
+              controller.loading
+                  ? const Center(child: CupertinoActivityIndicator())
+                  : controller.questions.isNotEmpty
+                      ? Expanded(
+                          child: _QuestionWidget(),
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                            Image.asset(
+                              "assets/images/faq.png",
+                              scale: 10,
+                            ),
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                            CustomText(
+                              txt: "Please add some questions!",
+                              fontSize: 20.sp,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 50.h,
-                        ),
-                        CustomText(
-                          txt: "Please add some questions!",
-                          fontSize: 20.sp,
-                        ),
-                      ],
-                    ),
             ],
           ),
         ),
@@ -112,8 +112,7 @@ class _QuestionWidget extends StatelessWidget {
             children: [
               ListTile(
                 title: CustomText(
-                  txt:
-                      "${controller.questions[index].question}",
+                  txt: "${controller.questions[index].question}",
                   height: 1.5,
                 ),
                 trailing: IconButton(

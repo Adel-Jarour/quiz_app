@@ -4,16 +4,11 @@ import 'package:quiz_app/screens/create_quiz_screen.dart';
 import 'package:quiz_app/screens/home_screen.dart';
 
 import '../screens/add_question_screen.dart';
-import '../screens/login_screen.dart';
 import '../screens/start_quiz_screen.dart';
 
 abstract class AppPages {
 
   static final pages = [
-    GetPage(
-      name: Routes.login,
-      page: () => LoginScreen(),
-    ),
     GetPage(
       name: Routes.home,
       page: () => HomeScreen(),

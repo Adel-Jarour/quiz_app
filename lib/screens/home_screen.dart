@@ -125,9 +125,7 @@ class DrawerWidget extends StatelessWidget {
             title: const CustomText(
               txt: "Exit",
             ),
-            onTap: () {
-              Get.toNamed(Routes.login);
-            },
+            onTap: () {},
           ),
         ],
       ),
