@@ -22,7 +22,7 @@ class StartQuizScreen extends StatelessWidget {
         appBar: AppBar(
           title: CustomText(
             txt: "Quiz App",
-            color: ColorConst.primaryColor,
+            color: Colors.white,
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
           ),
@@ -32,7 +32,7 @@ class StartQuizScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.arrow_back_ios,
-              color: ColorConst.primaryColor,
+              color: Colors.white,
             ),
           ),
         ),

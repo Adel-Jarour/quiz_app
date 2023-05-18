@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: CustomText(
           txt: "Home",
-          color: ColorConst.primaryColor,
+          color: Colors.white,
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.sort,
-              color: ColorConst.primaryColor,
+              color: Colors.white,
             ),
           ),
         ),

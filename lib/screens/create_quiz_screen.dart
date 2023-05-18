@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiz_app/controllers/create_quiz_controller.dart';
@@ -11,16 +12,14 @@ import 'package:get/get.dart';
 class CreateQuizScreen extends StatelessWidget {
   CreateQuizScreen({Key? key}) : super(key: key);
 
-  CreateQuizController controller = Get.put(CreateQuizController());
 
   @override
   Widget build(BuildContext context) {
-    controller.getAllQuestions();
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
           txt: "Create Quiz",
-          color: ColorConst.primaryColor,
+          color: Colors.white,
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
@@ -30,7 +29,7 @@ class CreateQuizScreen extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: ColorConst.primaryColor,
+            color: Colors.white,
           ),
         ),
       ),
@@ -42,7 +41,8 @@ class CreateQuizScreen extends StatelessWidget {
           bottom: 5.h,
         ),
         child: GetBuilder<CreateQuizController>(
-          builder: (_) => Column(
+          init: CreateQuizController(),
+          builder: (controller) => Column(
             children: [
               CustomButton(
                   txt: "+ Add new question",
@@ -52,6 +52,9 @@ class CreateQuizScreen extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
+              controller.loading ?
+              const Center(child: CupertinoActivityIndicator())
+                  :
               controller.questions.isNotEmpty
                   ? Expanded(
                       child: _QuestionWidget(),

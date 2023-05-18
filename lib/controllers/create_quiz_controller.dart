@@ -5,13 +5,17 @@ import 'package:quiz_app/models/question_model.dart';
 
 class CreateQuizController extends GetxController with RouteAware {
   List<QuestionModel> questions = [];
+  bool loading = false;
 
   Future getAllQuestions() async {
     questions = [];
+    loading = true;
+    update();
     final res = await DatabaseHelper().getQuestions();
     for (var i in res!) {
       questions.add(QuestionModel.fromMap(i));
     }
+    loading = false;
     update();
   }
 
@@ -27,5 +31,6 @@ class CreateQuizController extends GetxController with RouteAware {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    getAllQuestions();
   }
 }

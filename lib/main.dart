@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         getPages: AppPages.pages,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
-            backgroundColor: ColorConst.backgroundColor,
+            backgroundColor: ColorConst.primaryColor,
             elevation: 0,
           ),
           drawerTheme: DrawerThemeData(
