@@ -25,18 +25,17 @@ class AddQuestionScreen extends StatelessWidget {
       appBar: AppBar(
         title: CustomText(
           txt: "Add Question",
-          color: ColorConst.primaryColor,
+          color: Colors.white,
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
         leading: IconButton(
           onPressed: () {
-            // Get.back();
-            Get.toNamed(Routes.createQuiz);
+            Get.back();
           },
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: ColorConst.primaryColor,
+            color: Colors.white,
           ),
         ),
       ),

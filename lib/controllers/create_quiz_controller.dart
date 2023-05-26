@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/db_controller/db_helper.dart';
 import 'package:quiz_app/models/question_model.dart';
 
-class CreateQuizController extends GetxController with RouteAware {
+class CreateQuizController extends GetxController {
   List<QuestionModel> questions = [];
   bool loading = false;
 
@@ -20,9 +19,7 @@ class CreateQuizController extends GetxController with RouteAware {
   }
 
   Future deleteQuestion(int id) async {
-    print("the element that deleted is: $id");
     final res = await DatabaseHelper().deleteQuestion(id);
-    print("response to delete is: $res");
     await getAllQuestions();
     update();
   }

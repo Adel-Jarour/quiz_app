@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:quiz_app/controllers/create_quiz_controller.dart';
 import 'package:quiz_app/widgets/custem_text.dart';
 
 import '../db_controller/db_helper.dart';
+import '../models/question_model.dart';
 
 class AddQuestionController extends GetxController {
   late TextEditingController question;
@@ -13,6 +15,7 @@ class AddQuestionController extends GetxController {
   late TextEditingController answer3;
   late TextEditingController answer4;
   late TextEditingController correctAnswer;
+  CreateQuizController controller = Get.find();
 
   String dropdownValue = 'A';
 
@@ -35,7 +38,7 @@ class AddQuestionController extends GetxController {
   }
 
   saveDataToDB() async {
-    await DatabaseHelper().addQuestion(
+    final res = await DatabaseHelper().addQuestion(
       question.text,
       answer1.text,
       answer2.text,
@@ -43,6 +46,8 @@ class AddQuestionController extends GetxController {
       answer4.text,
       dropdownValue,
     );
+    await controller.getAllQuestions();
+    update();
   }
 
   void performSubmit() async {
