@@ -2,7 +2,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/add_question_controller.dart';
-import 'package:quiz_app/routing/routes.dart';
 import 'package:quiz_app/widgets/add_answer_widget.dart';
 import 'package:quiz_app/widgets/custom_button.dart';
 import 'package:quiz_app/widgets/custom_text_form_field.dart';
@@ -13,12 +12,11 @@ import '../widgets/custem_text.dart';
 class AddQuestionScreen extends StatelessWidget {
   AddQuestionScreen({Key? key}) : super(key: key);
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+    AddQuestionController controller =
+        Get.put(AddQuestionController());
   @override
   Widget build(BuildContext context) {
-    AddQuestionController controller =
-        Get.put(AddQuestionController(formKey: formKey));
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -43,7 +41,7 @@ class AddQuestionScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
           child: Form(
-            key: formKey,
+            key: controller.formKey,
             child: Column(
               children: [
                 CustomTextFormField(
@@ -55,7 +53,7 @@ class AddQuestionScreen extends StatelessWidget {
                 SizedBox(
                   height: 40.h,
                 ),
-                const _AnswerFieldsWidget(),
+                const AnswerFieldsWidget(),
                 SizedBox(
                   height: 40.h,
                 ),
@@ -97,8 +95,8 @@ class AddQuestionScreen extends StatelessWidget {
   }
 }
 
-class _AnswerFieldsWidget extends StatelessWidget {
-  const _AnswerFieldsWidget({
+class AnswerFieldsWidget extends StatelessWidget {
+  const AnswerFieldsWidget({
     super.key,
   });
 

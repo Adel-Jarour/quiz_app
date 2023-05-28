@@ -69,7 +69,7 @@ class CustomButton extends StatelessWidget {
                 txt: txt,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
-                fontFamily: "DINNextLTW23",
+                fontFamily: "Sora",
               ),
       ),
     );

@@ -56,7 +56,7 @@ class CreateQuizScreen extends StatelessWidget {
                   ? const Center(child: CupertinoActivityIndicator())
                   : controller.questions.isNotEmpty
                       ? Expanded(
-                          child: _QuestionWidget(),
+                          child: QuestionWidget(),
                         )
                       : Column(
                           children: [
@@ -80,13 +80,13 @@ class CreateQuizScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: const _FloatingWidget(),
+      floatingActionButton: const FloatingWidget(),
     );
   }
 }
 
-class _QuestionWidget extends StatelessWidget {
-  _QuestionWidget({
+class QuestionWidget extends StatelessWidget {
+  QuestionWidget({
     super.key,
   });
 
@@ -166,22 +166,22 @@ class _QuestionWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 5.h),
-              _AnswerWidget(
+              AnswerWidget(
                 answer: controller.questions[index].answer1 ?? "",
                 condition: (controller.questions[index].correctAnswer == "A"),
               ),
               SizedBox(height: 13.h),
-              _AnswerWidget(
+              AnswerWidget(
                 answer: controller.questions[index].answer2 ?? "",
                 condition: (controller.questions[index].correctAnswer == "B"),
               ),
               SizedBox(height: 13.h),
-              _AnswerWidget(
+              AnswerWidget(
                 answer: controller.questions[index].answer3 ?? "",
                 condition: (controller.questions[index].correctAnswer == "C"),
               ),
               SizedBox(height: 13.h),
-              _AnswerWidget(
+              AnswerWidget(
                 answer: controller.questions[index].answer4 ?? "",
                 condition: (controller.questions[index].correctAnswer == "D"),
               ),
@@ -194,8 +194,8 @@ class _QuestionWidget extends StatelessWidget {
   }
 }
 
-class _AnswerWidget extends StatelessWidget {
-  const _AnswerWidget({
+class AnswerWidget extends StatelessWidget {
+  const AnswerWidget({
     super.key,
     required this.answer,
     required this.condition,
@@ -227,8 +227,8 @@ class _AnswerWidget extends StatelessWidget {
   }
 }
 
-class _FloatingWidget extends StatelessWidget {
-  const _FloatingWidget({
+class FloatingWidget extends StatelessWidget {
+  const FloatingWidget({
     super.key,
   });
 

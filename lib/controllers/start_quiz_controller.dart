@@ -52,7 +52,6 @@ class StartQuizController extends GetxController {
         curve: Curves.ease,
       );
     }
-    print(selectedAnswer);
     update();
   }
 
@@ -70,7 +69,6 @@ class StartQuizController extends GetxController {
         equalCount++;
       }
     }
-    print("equalCount is: $equalCount");
   }
 
   // calculate the success rate from result
@@ -85,7 +83,6 @@ class StartQuizController extends GetxController {
     } else {
       index = 2;
     }
-    print("ratio result is: $ratio %");
     update();
   }
 

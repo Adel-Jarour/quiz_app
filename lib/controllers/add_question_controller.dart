@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +5,6 @@ import 'package:quiz_app/controllers/create_quiz_controller.dart';
 import 'package:quiz_app/widgets/custem_text.dart';
 
 import '../db_controller/db_helper.dart';
-import '../models/question_model.dart';
 
 class AddQuestionController extends GetxController {
   late TextEditingController question;
@@ -24,9 +22,11 @@ class AddQuestionController extends GetxController {
     update();
   }
 
-  GlobalKey<FormState> formKey;
+  // GlobalKey<FormState> formKey;
 
-  AddQuestionController({required this.formKey});
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  // AddQuestionController({required this.formKey});
 
   bool isSubmit = false;
 

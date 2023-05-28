@@ -25,7 +25,7 @@ class DatabaseHelper {
     final path = join(databasesPath, 'my_database.db');
 
     return await openDatabase(path,
-        version: 2, onCreate: _onCreate, onUpgrade: _onUpgrade);
+        version: 1, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -52,12 +52,6 @@ class DatabaseHelper {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
-  Future<int?> addUser(String username, String password) async {
-    final db = await database;
-    final res =
-        await db?.insert('users', {'username': username, 'email': password});
-    return res;
-  }
 
   Future<List<Map<String, dynamic>>?> getQuestions() async {
     final db = await database;
@@ -82,6 +76,13 @@ class DatabaseHelper {
   Future<int?> deleteQuestion(int id) async {
     final db = await database;
     final res = await db?.delete('questions', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int?> addUser(String username, String password) async {
+    final db = await database;
+    final res =
+        await db?.insert('users', {'username': username, 'email': password});
     return res;
   }
 

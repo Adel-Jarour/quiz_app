@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/constance/color_const.dart';
-import 'package:quiz_app/controllers/create_quiz_controller.dart';
 import 'package:quiz_app/routing/pages.dart';
 import 'package:quiz_app/routing/routes.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Get.put(CreateQuizController());
   runApp(const MyApp());
 }
 
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
         initialRoute: Routes.home,
         getPages: AppPages.pages,
         theme: ThemeData(
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: ColorConst.primaryColor,
             elevation: 0,
           ),

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiz_app/constance/color_const.dart';
@@ -75,8 +76,8 @@ class CustomTextFormField extends StatelessWidget {
           }
           return null;
         },
-        minLines: minLines,
-        maxLines: maxLines,
+        minLines: null,
+        maxLines: null,
         style: TextStyle(
             fontFamily: "Sora",
             color: Colors.black,
